@@ -1,0 +1,29 @@
+<div id="content">
+    <!-- page content -->
+    <h2>Add your post</h2>
+    <form method="post" action="/news/add-news">
+        <div class="form_settings">
+            <p><span>Select News Category:</span>
+                <select id="id" name="name">
+                    <option value="category">--Select Category--</option>
+                    <option value="electronics">Politics</option>
+                    <option value="fashion">Sports</option>
+                    <option value="motors">Business</option>
+                    <option value="books">Entertainment</option>
+                    <option value="sports">Weather</option>
+                </select>
+            </p>
+            <br />
+            <p><span>Title:</span><input type="text" name="title" value="" /></p>
+            <br />
+            <p><span>Add your news text here:</span><textarea rows="40" cols="60" name="body"></textarea></p>
+            <br />
+            <br />
+            <p><span>Upload Photo/Video/Audio:</span><input type="file" name="image_file" id="file-select" /></p>
+            <br />
+            <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" name="name" value="Post" /></p>
+            <br />
+            <br />
+        </div>
+    </form>
+</div>

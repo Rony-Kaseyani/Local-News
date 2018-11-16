@@ -2,10 +2,12 @@
 const express = require('express')
 const compression = require('compression')
 const bodyParser = require('body-parser')
+const passport = require('passport')
 const logger = require('morgan')
 const methodOverride = require('method-override')
 const hbs = require('express-handlebars')
 const errorhandler = require('errorhandler')
+const models = require('./models');
 
 // init express app
 const app = express()
@@ -21,12 +23,16 @@ app.use(logger('dev'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(methodOverride())
+app.use(passport.initialize())
 
 // template engine
 app.engine('handlebars', hbs({defaultLayout: "main"}))
 app.set('view engine', 'handlebars')
 
 app.use(require('./routes'))
+
+//load passport strategies
+require('./config/passport/passport.js')(passport, models.user)
 
 if (!isProduction) {
     app.use(errorhandler())
