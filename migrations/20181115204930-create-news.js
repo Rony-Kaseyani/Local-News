@@ -31,6 +31,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
+      published: {
+        type: Sequelize.BOOLEAN
+      },      
       pinned: {
         type: Sequelize.BOOLEAN
       },

@@ -11,7 +11,7 @@ router.post('/add-news', (req, res) => {
         video: req.body.video_file,
         audio: req.body.audio_file,
         //UserId: req.params.user_id,
-        Category: req.body.category_id
+        //Category: req.body.category_id
     }).then(() => {
         res.redirect('/')
     })
