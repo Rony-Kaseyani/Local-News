@@ -15,6 +15,7 @@ router.use('/news', require('./news'))
 router.get('/dashboard', (req, res) => res.render('dashboard'))
 router.get('/register', (req, res) => res.render('user-registration-form'))
 router.get('/login', (req, res) => res.render('login-form'))
+router.get('/category', (req, res) => res.render('login-form'))
 
 
 module.exports = router

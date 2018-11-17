@@ -23,6 +23,12 @@ module.exports = {
       audio: {
         type: Sequelize.STRING
       },
+      approved: {
+        type: Sequelize.BOOLEAN
+      },
+      pinned: {
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -30,30 +36,6 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      },
-      published: {
-        type: Sequelize.BOOLEAN
-      },      
-      pinned: {
-        type: Sequelize.BOOLEAN
-      },
-      UserId: {
-        type: Sequelize.INTEGER,
-        onDelete: "CASCADE",
-        allowNull: false,
-        references: {
-          model: 'Users',
-          key: 'id'
-        }
-      },
-      CategoryId: {
-        type: Sequelize.INTEGER,
-        onDelete: "CASCADE",
-        allowNull: false,
-        references: {
-          model: 'Category',
-          key: 'id'
-        }
       }
     });
   },
