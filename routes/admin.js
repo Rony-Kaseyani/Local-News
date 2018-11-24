@@ -13,4 +13,15 @@ router.post('/add-category', (req, res) => {
     })
 })
 
+router.get('/articles', async(req, res) => {
+
+    models.News.findAll({
+        where: {
+            approved: 0
+          }
+    }).then((news) => {
+        res.render('admin-articles-view', {articles: news})
+    })
+})
+
 module.exports = router

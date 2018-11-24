@@ -1,0 +1,25 @@
+<div id="content">
+    <!-- page content -->
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Category</th>
+            <th>Title</th>
+            <th>Approved</th>
+            <th>Approve</th>
+        </tr>
+        {{#each articles}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.category}}</td>
+            <td>{{this.title}}</td>
+            <td>{{this.approved}}</td>
+            <td>
+                <form method="post" action="/news/add-news>
+                    <input class="submit" type="submit" name="name" value="Post" />
+                </form>
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+</div>

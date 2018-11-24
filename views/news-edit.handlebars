@@ -1,30 +1,31 @@
 <div id="content">
     <!-- page content -->
-    <h2>Add your post</h2>
+    <h2>Edit your post</h2>
     <form method="post" enctype="multipart/form-data" action="/news/add-news">
         <div class="form_settings">
+                   
             <p><span>Select News Category:</span>
                 <select id="id" name="category">
                     <option value="category">--Select Category--</option>
                     <option value="politics">Politics</option>
                     <option value="sports">Sports</option>
                     <option value="business">Business</option>
-                    <option value="technology">Technology</option>
                     <option value="entertainment">Entertainment</option>
                     <option value="weather">Weather</option>
                 </select>
             </p>
-            <br />
+            <br/>
             <p><span>Title:</span><input type="text" name="title" value="" /></p>
-            <br />
+            <br/>
             <p><span>Add your news text here:</span><textarea rows="40" cols="60" name="body"></textarea></p>
-            <br />
-            <br />
+            <br/>
+            <br/>
             <p><span>Upload Image:</span><input type="file" name="image_file" id="file-select" /></p>
-            <br />                       
-            <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" name="name" value="Post" /></p>
+            <br/>                       
+            <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" name="name" value="Edit" /></p>
             <br />
-            <br />
+            <br /> 
         </div>
-    </form>
+    </form>       
 </div>
+ 

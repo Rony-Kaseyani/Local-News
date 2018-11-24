@@ -8,6 +8,13 @@ const methodOverride = require('method-override')
 const hbs = require('express-handlebars')
 const errorhandler = require('errorhandler')
 const models = require('./models')
+const multer = require('multer')
+const session = require('express-session')
+
+//image upload directory
+const imageUpload = multer({
+  dest: './images/' // this saves image files into a directory called "images"
+})
 
 // init express app
 const app = express()
@@ -25,8 +32,19 @@ app.use(bodyParser.json())
 app.use(methodOverride())
 app.use(passport.initialize())
 
+app.use(session({
+  genid: (req) => {
+    console.log('Inside the session middleware')
+    console.log(req.sessionID)
+    return uuid() // use UUIDs for session IDs
+  },
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true
+}))
+
 // template engine
-app.engine('handlebars', hbs({defaultLayout: "main"}))
+app.engine('handlebars', hbs({ defaultLayout: "main" }))
 app.set('view engine', 'handlebars')
 
 app.use(require('./routes'))
@@ -35,7 +53,7 @@ app.use(require('./routes'))
 require('./config/passport/passport.js')(passport, models.user)
 
 if (!isProduction) {
-    app.use(errorhandler())
+  app.use(errorhandler())
 }
 
 /// catch 404 and forward to error handler
@@ -55,10 +73,12 @@ if (!isProduction) {
 
     res.status(err.status || 500)
 
-    res.render('error', {'errors': {
-      message: err.message,
-      error: err
-    }})
+    res.render('error', {
+      'errors': {
+        message: err.message,
+        error: err
+      }
+    })
   })
 }
 
@@ -66,13 +86,15 @@ if (!isProduction) {
 // no stacktraces leaked to the client
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
-  res.render('error', {'errors': {
-    message: err.message,
-    error: {}
-  }})
+  res.render('error', {
+    'errors': {
+      message: err.message,
+      error: {}
+    }
+  })
 })
 
 // starting the server...
-const server = app.listen( process.env.PORT || 3000, () => {
+const server = app.listen(process.env.PORT || 3000, () => {
   console.log('Listening on port ' + server.address().port)
 })

@@ -6,7 +6,7 @@ router.get('/register', (req, res) => res.render('user-registration-form'))
 
 router.get('/login', (req, res) => res.render('login-form'))
 
-router.get('/dashboard', isLoggedIn, (req, res) => res.render('dashboard'))
+//router.get('/list', isLoggedIn, (req, res) => res.render('dashboard'))
 
 router.get('/logout', (req, res) => res.render('/'))
 
@@ -19,7 +19,7 @@ router.post('/register', passport.authenticate('local-signup', {
 ))
 
 router.post('/login', passport.authenticate('local-signin', {
-    successRedirect: '/dashboard',
+    successRedirect: '/list',
 
     failureRedirect: '/login'
 }
@@ -30,9 +30,9 @@ function isLoggedIn(req, res, next) {
 
     if (req.isAuthenticated())
 
-        return next();
+        return next()
 
-    res.redirect('/login');
+    res.redirect('/login')
 
 }
 

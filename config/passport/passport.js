@@ -153,7 +153,7 @@ passport.use('local-signin', new LocalStrategy(
  
                 return done(null, false, {
                     message: 'Email does not exist'
-                });
+                })
  
             }
  

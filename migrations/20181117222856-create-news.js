@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('News', {
@@ -8,6 +8,9 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      category: {
+        type: Sequelize.STRING
+      },
       title: {
         type: Sequelize.STRING
       },
@@ -15,12 +18,6 @@ module.exports = {
         type: Sequelize.TEXT
       },
       image: {
-        type: Sequelize.STRING
-      },
-      video: {
-        type: Sequelize.STRING
-      },
-      audio: {
         type: Sequelize.STRING
       },
       approved: {
@@ -36,10 +33,10 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
-    });
+      }      
+    })
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('News');
+    return queryInterface.dropTable('News')
   }
-};
+}

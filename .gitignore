@@ -22,6 +22,9 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 
+# images uploaded to server
+/public/article_images
+
 # nyc test coverage
 .nyc_output
 
