@@ -1,31 +1,35 @@
 <div id="content">
     <!-- page content -->
+    {{#each article}}
     <h2>Edit your post</h2>
-    <form method="post" enctype="multipart/form-data" action="/news/add-news">
+    <form method="post" enctype="multipart/form-data" action="/news/news-edit">
         <div class="form_settings">
                    
             <p><span>Select News Category:</span>
                 <select id="id" name="category">
-                    <option value="category">--Select Category--</option>
-                    <option value="politics">Politics</option>
-                    <option value="sports">Sports</option>
-                    <option value="business">Business</option>
-                    <option value="entertainment">Entertainment</option>
-                    <option value="weather">Weather</option>
+                    <option value="Category">{{this.category}}</option>
+                    <option value="Category">--Select Category--</option>
+                    <option value="Politics">Politics</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Business">Business</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Entertainment">Entertainment</option>
+                    <option value="Weather">Weather</option>
                 </select>
             </p>
             <br/>
-            <p><span>Title:</span><input type="text" name="title" value="" /></p>
+            <p><span>Title:</span><input type="text" name="title" value="{{this.title}}" /></p>
             <br/>
-            <p><span>Add your news text here:</span><textarea rows="40" cols="60" name="body"></textarea></p>
+            <p><span>Add your news text here:</span><textarea rows="40" cols="60" name="body">{{this.body}}</textarea></p>
             <br/>
             <br/>
-            <p><span>Upload Image:</span><input type="file" name="image_file" id="file-select" /></p>
+            <p><span>Upload Image:</span><input type="file" name="image_file" id="file-select" value="{{this.image}}"/></p>
             <br/>                       
             <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" name="name" value="Edit" /></p>
             <br />
             <br /> 
         </div>
-    </form>       
+    </form>
+    {{/each}}      
 </div>
  

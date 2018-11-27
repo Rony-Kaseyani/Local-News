@@ -6,7 +6,7 @@
   <meta name="description" content="site description" />
   <meta name="keywords" content="site keywords, site keywords" />
   <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
-  <link rel="stylesheet" type="text/css" href="../css/style.css" title="style" />
+  <link rel="stylesheet" type="text/css" href="/css/style.css" title="style" />
 </head>
 
 <body>
@@ -15,25 +15,29 @@
       <div id="logo">
         <div id="logo_text">
           <!-- change text color -->
-          <h1><a href="index.html">Local<span class="logo_colour">News</span></a></h1>
+          <h1><a href="/">Local<span class="logo_colour">News</span></a></h1>
           <h2>Straight from the source.</h2>
         </div>
       </div>
       <div id="menubar">
         <ul id="menu">
           <!-- navigation -->
-          <li class="selected"><a href="index.html">Home</a></li>
-          <li><a href="politics.html">Politics</a></li>
-          <li><a href="sports.html">Sports</a></li>
-          <li><a href="business.html">Business</a></li>
-          <li><a href="technology.html">Technology</a></li>
-		      <li><a href="entertainment.html">Entertainment</a></li>
+          <li class="selected"><a href="/">Home</a></li>
+          <li><a href="/news/category/politics">Politics</a></li>
+          <li><a href="/news/category/sports">Sports</a></li>
+          <li><a href="/news/category/business">Business</a></li>
+          <li><a href="/news/category/technology">Technology</a></li>
+		      <li><a href="/news/category/entertainment">Entertainment</a></li>
 		      <li><a href="more.html">More</a></li>
         </ul>
       </div>
 		  <div class="topright">
+      {{#if logout}}
 			<a href="/users/login" id="topright">Login</a>
 			<a href="/users/register" id="topright">Register</a>
+      {{else}}
+      <a href="/logout" id="topright">Logout</a>
+      {{/if}}
 		  </div>	  
     </div>
     <div id="site_content">
@@ -43,7 +47,7 @@
         <form method="post" action="#" id="search_form">
           <p>
             <input class="search" type="text" name="search_field" value="Enter keywords....." />
-            <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="../css/search.png" alt="Search" title="Search" />
+            <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="/css/search.png" alt="Search" title="Search" />
           </p>
         </form>
         <h3>Top Stories</h3>

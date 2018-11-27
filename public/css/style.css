@@ -300,3 +300,7 @@ table tr td
 #topright {
   color: #fff;
 }
+
+.capitalize {
+  text-transform: capitalize;
+}

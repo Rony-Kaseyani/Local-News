@@ -11,11 +11,6 @@ const models = require('./models')
 const multer = require('multer')
 const session = require('express-session')
 
-//image upload directory
-const imageUpload = multer({
-  dest: './images/' // this saves image files into a directory called "images"
-})
-
 // init express app
 const app = express()
 
@@ -30,23 +25,24 @@ app.use(logger('dev'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(methodOverride())
-app.use(passport.initialize())
 
 app.use(session({
-  genid: (req) => {
-    console.log('Inside the session middleware')
-    console.log(req.sessionID)
-    return uuid() // use UUIDs for session IDs
-  },
   secret: 'keyboard cat',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: false,
+  //cookie: { secure: true }
 }))
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 // template engine
 app.engine('handlebars', hbs({ defaultLayout: "main" }))
 app.set('view engine', 'handlebars')
-
+app.use((req, res, next) => {
+  res.locals.logout = !req.isAuthenticated()
+  next()
+})
 app.use(require('./routes'))
 
 //load passport strategies

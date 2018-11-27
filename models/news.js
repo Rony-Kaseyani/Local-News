@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
   News.associate = function(models) {
     // associations can be defined here
     //news belongs to a user
-    //News.belongsTo(models.User)
+    News.belongsTo(models.user)
   }
   return News
 }
