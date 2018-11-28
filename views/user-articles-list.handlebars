@@ -1,10 +1,14 @@
 <div id="content">
    <!-- page content -->
-   <h2>Latest News</h2>
-   {{#each list}}
+   <h2>My News</h2>
+   {{#each articles}}
    <table>
       <tbody>
-         <tr><td><img src="/article_images/{{this.image}}" alt="Article Image" width="50" height="40"></td><td><a href="/news/single/{{this.id}}">{{this.title}}</a></td></tr>
+         <tr>
+            <td><img src="/article_images/{{this.image}}" alt="Article Image" width="50" height="40"></td>
+            <td><a href="/news/single/{{this.id}}">{{this.title}}</a></td>
+            <td><a href="/news/single/{{this.id}}/edit">Edit</a></td>
+         </tr>
       </tbody>
    </table>
    {{/each}}

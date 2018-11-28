@@ -12,12 +12,20 @@
         <tr>
             <td>{{this.id}}</td>
             <td>{{this.category}}</td>
-            <td>{{this.title}}</td>
+            <td><a href="">{{this.title}}</a></td>
             <td>{{this.approved}}</td>
             <td>
-                <form method="post" action="/news/add-news>
-                    <input class="submit" type="submit" name="name" value="Post" />
+                {{#if this.approved}}
+                <form method="post" action="/admin/disapprove">
+                    <input type="hidden" name="article_id" value="{{ this.id }}" />
+                    <input class="submit" type="submit" value="Disapprove" />  
                 </form>
+                {{else }}
+                <form method="post" action="/admin/approve">
+                    <input type="hidden" name="article_id" value="{{ this.id }}" />
+                    <input class="submit" type="submit" value="Approve" />  
+                </form>
+                {{/if}}
             </td>
         </tr>
         {{/each}}

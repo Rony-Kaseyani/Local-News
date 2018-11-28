@@ -19,13 +19,11 @@ router.get('/', async (req, res) => {
 router.use('/admin', require('./admin'))
 router.use('/users', require('./users'))
 router.use('/news', require('./news'))
-router.get('/dashboard', (req, res) => res.render('dashboard'))
-router.get('/register', (req, res) => res.render('user-registration-form'))
-router.get('/login', (req, res) => res.render('login-form'))
-router.get('/logout', (req, res) => {
+router.get('/category', async (req, res) => res.render('category-form'))
+router.get('/logout', async (req, res) => {
+    req.session.destroy()
     req.logout()
-    res.render('index')
+    res.redirect('/')
 })
-router.get('/category', (req, res) => res.render('category-form'))
 
 module.exports = router
