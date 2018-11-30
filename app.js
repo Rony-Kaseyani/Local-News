@@ -8,7 +8,6 @@ const methodOverride = require('method-override')
 const hbs = require('express-handlebars')
 const errorhandler = require('errorhandler')
 const models = require('./models')
-const multer = require('multer')
 const session = require('express-session')
 
 // init express app
@@ -41,6 +40,11 @@ app.engine('handlebars', hbs({ defaultLayout: "main" }))
 app.set('view engine', 'handlebars')
 app.use((req, res, next) => {
   res.locals.logout = !req.isAuthenticated()
+  models.News.findAll({
+    where: {pinned: true}
+  }).then((news) => {
+    res.locals.pinned_articles = news
+  })
   next()
 })
 app.use(require('./routes'))

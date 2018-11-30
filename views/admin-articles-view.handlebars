@@ -1,5 +1,6 @@
 <div id="content">
     <!-- page content -->
+    <a href="/admin/category">Add new category</a> | <a href="/news/post">Post news item</a>
     <table>
         <tr>
             <th>ID</th>
@@ -7,6 +8,8 @@
             <th>Title</th>
             <th>Approved</th>
             <th>Approve</th>
+            <th>Pinned</th>
+            <th>Pin</th>
         </tr>
         {{#each articles}}
         <tr>
@@ -24,6 +27,20 @@
                 <form method="post" action="/admin/approve">
                     <input type="hidden" name="article_id" value="{{ this.id }}" />
                     <input class="submit" type="submit" value="Approve" />  
+                </form>
+                {{/if}}
+            </td>
+            <td>{{this.pinned}}</td>
+            <td>
+                {{#if this.pinned}}
+                <form method="post" action="/admin/unpin">
+                    <input type="hidden" name="article_id" value="{{ this.id }}" />
+                    <input class="submit" type="submit" value="Unpin" />  
+                </form>
+                {{else }}
+                <form method="post" action="/admin/pin">
+                    <input type="hidden" name="article_id" value="{{ this.id }}" />
+                    <input class="submit" type="submit" value="Pin" />  
                 </form>
                 {{/if}}
             </td>
