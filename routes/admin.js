@@ -49,4 +49,20 @@ router.post('/disapprove', async (req, res) => {
     })
 })
 
+router.post('/pin', async (req, res) => {
+    models.News.update({
+        pinned: true
+    }, {where: {id: req.body.article_id}}).then(() => {
+        res.redirect('/admin')
+    })
+})
+
+router.post('/unpin', async (req, res) => {
+    models.News.update({
+        pinned: false
+    }, {where: {id: req.body.article_id}}).then(() => {
+        res.redirect('/admin')
+    })
+})
+
 module.exports = router

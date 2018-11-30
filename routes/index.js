@@ -16,6 +16,7 @@ router.get('/', async (req, res) => {
         res.render('articles-list', { title: "Latest News", list: news })
     })
 })
+
 router.use('/admin', require('./admin'))
 router.use('/users', require('./users'))
 router.use('/news', require('./news'))

@@ -2,8 +2,7 @@ const router = require('express').Router()
 const isLoggedIn = require('./util')
 const models = require('../models/')
 const multer = require('multer')
-const path = require('path')
-const showdown  = require('showdown')
+const showdown = require('showdown')
 
 const converter = new showdown.Converter()
 
@@ -25,12 +24,12 @@ var imageUpload = multer({ storage: storage })
 
 router.get('/post', async (req, res) => res.render('post-news'))
 
-router.post('/add-news', isLoggedIn, imageUpload.single('image_file'), async(req, res) => {
+router.post('/add-news', isLoggedIn, imageUpload.single('image_file'), async (req, res) => {
 
     const isApproved = 0
     const isPinned = 0
     const sessionID = req.user.id
-    console.log('hey bro, are you logged in?'+sessionID)
+    console.log('hey bro, are you logged in?' + sessionID)
     models.News.create({
         category: req.body.category,
         title: req.body.title,
@@ -44,42 +43,12 @@ router.post('/add-news', isLoggedIn, imageUpload.single('image_file'), async(req
     })
 })
 
-router.get('/article', async (req, res) => {
-
-    models.News.findAll({
-        where: {
-            id: 4
-        }
-    }).then((news) => {
-        res.render('view-article', { article: news })
-    })
-})
-
-router.get('/articles', async (req, res) => {
-
-    models.News.findAll({
-    }).then((news) => {
-        res.render('articles-list', { list: news })
-    })
-})
-
-router.get('/edit', async (req, res) => {
-
-    models.News.findAll({
-        where: {
-            id: 4
-        }
-    }).then((news) => {
-        res.render('news-edit', { article: news })
-    })
-})
-
 router.get('/post', async (req, res) => res.render('post-news'))
 
 router.get('/single/:id', async (req, res) => {
     models.News.findById(req.params.id).then((item) => {
         const body = converter.makeHtml(item.body)
-        res.render('open-article', {item, body })
+        res.render('open-article', { item, body })
     })
 })
 
@@ -90,14 +59,14 @@ router.get('/single/:id/edit', isLoggedIn, async (req, res) => {
 })
 
 router.post('/single/:id/edit', isLoggedIn, imageUpload.single('imagefile'), async (req, res) => {
-    models.News.findById(req.params.id).then((article) => { 
+    models.News.findById(req.params.id).then((article) => {
         const articleImage = article.image
         models.News.update({
             category: req.body.category,
             title: req.body.title,
             body: req.body.body,
             image: req.file ? dateNow + req.file.originalname : articleImage,
-        }, { where: { id: req.params.id, userId: req.user.id }}).then(() => res.redirect('/users/dashboard'))
+        }, { where: { id: req.params.id, userId: req.user.id } }).then(() => res.redirect('/users/dashboard'))
     })
 })
 
@@ -108,6 +77,7 @@ router.get('/category/:category', async (req, res) => {
             category: req.params.category
         }
     }).then((news) => {
+        res.locals.category_nav_title = req.params.category
         res.render('articles-list', { title: req.params.category, list: news })
     })
 })

@@ -28,7 +28,6 @@
           <li><a href="/news/category/business">Business</a></li>
           <li><a href="/news/category/technology">Technology</a></li>
 		      <li><a href="/news/category/entertainment">Entertainment</a></li>
-		      <li><a href="more.html">More</a></li>
         </ul>
       </div>
 		  <div class="topright">
@@ -38,7 +37,7 @@
       {{else}}
       <a href="/logout" id="topright">Logout</a>
       {{/if}}
-		  </div>	  
+		  </div>
     </div>
     <div id="site_content">
       <div class="sidebar">
@@ -46,18 +45,23 @@
         <h3>Search</h3>
         <form method="post" action="#" id="search_form">
           <p>
-            <input class="search" type="text" name="search_field" value="Enter keywords....." />
+            <input class="search" type="text" name="search_field" onfocus="this.value=''" value="Enter keywords....." />
             <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="/css/search.png" alt="Search" title="Search" />
           </p>
         </form>
         <h3>Top Stories</h3>
-
-        <h3>Useful Links</h3>
         <ul>
-          <li><a href="/news/post">Post news item</a></li>
-          <li><a href="/admin/category">Add new category</a></li>
-          <li><a href="/news/edit">Edit news article</a></li>
-          <li><a href="#">link 4</a></li>
+          {{#each pinned_articles}}
+            <li style="display: flex; align-items: bottom;">
+              <div style="width: 30px; height: 30px; margin-right: 5px; padding-top: 5px;">
+                <img width="30px" height="auto" src="/article_images/{{this.dataValues.image}}">
+              </div>
+              <div>
+                <p>{{this.dataValues.title}}</p>
+                <a href="/news/single/{{this.dataValues.id}}">Read this story here</a>
+              </div>
+            </li>
+          {{/each}}
         </ul>
       </div>
       <div id="content">
