@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -12,35 +12,44 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-   return queryInterface.bulkInsert('Journalists', [{
-      firstName: 'Armin',
-      lastName: 'Naimi',
-      userName: 'anaimi',
-      passWord: 'maysy',
-      createdAt: new Date().toDateString(),
-      updatedAt: new Date().toDateString()
-    }, {
-        firstName: 'May',
-        lastName: 'Naimi-Jones',
-        userName: 'mjones',
-        passWord: 'mrman',
-        createdAt: new Date().toDateString(),
-        updatedAt: new Date().toDateString()
-      }, {
+    return queryInterface.bulkInsert(
+      'Journalists',
+      [
+        {
+          firstName: 'Armin',
+          lastName: 'Naimi',
+          userName: 'anaimi',
+          passWord: 'maysy',
+          createdAt: new Date().toDateString(),
+          updatedAt: new Date().toDateString()
+        },
+        {
+          firstName: 'May',
+          lastName: 'Naimi-Jones',
+          userName: 'mjones',
+          passWord: 'mrman',
+          createdAt: new Date().toDateString(),
+          updatedAt: new Date().toDateString()
+        },
+        {
           firstName: 'Reema',
           lastName: 'Kaseyani-Jones',
           userName: 'rjones',
           passWord: 'wony',
           createdAt: new Date().toDateString(),
           updatedAt: new Date().toDateString()
-        }, {
-            firstName: 'Rony',
-            lastName: 'Kaseyani',
-            userName: 'rkaseyani',
-            passWord: 'weemsy',
-            createdAt: new Date().toDateString(),
-            updatedAt: new Date().toDateString()          
-  }], {})
+        },
+        {
+          firstName: 'Rony',
+          lastName: 'Kaseyani',
+          userName: 'rkaseyani',
+          passWord: 'weemsy',
+          createdAt: new Date().toDateString(),
+          updatedAt: new Date().toDateString()
+        }
+      ],
+      {}
+    )
   },
 
   down: (queryInterface, Sequelize) => {
@@ -51,6 +60,6 @@ module.exports = {
       Example:
       return queryInterface.bulkDelete('People', null, {});
     */
-   return queryInterface.bulkDelete('Journalists', null, {})
+    return queryInterface.bulkDelete('Journalists', null, {})
   }
 }

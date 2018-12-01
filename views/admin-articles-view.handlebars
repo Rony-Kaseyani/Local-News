@@ -1,6 +1,6 @@
 <div id="content">
     <!-- page content -->
-    <a href="/admin/category">Add new category</a> | <a href="/news/post">Post news item</a>
+    <a href="/admin/category">Add new category</a> | <a href="/admin/categories">View Categories</a> | <a href="/news/post">Post news item</a> | <a href="/admin">View Articles</a>
     <table>
         <tr>
             <th>ID</th>
@@ -15,7 +15,7 @@
         <tr>
             <td>{{this.id}}</td>
             <td>{{this.category}}</td>
-            <td><a href="">{{this.title}}</a></td>
+            <td><a href="/news/single/{{this.dataValues.id}}">{{this.title}}</a></td>
             <td>{{this.approved}}</td>
             <td>
                 {{#if this.approved}}

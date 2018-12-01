@@ -23,49 +23,47 @@
         <ul id="menu">
           <!-- navigation -->
           <li class="selected"><a href="/">Home</a></li>
-          <li><a href="/news/category/politics">Politics</a></li>
-          <li><a href="/news/category/sports">Sports</a></li>
-          <li><a href="/news/category/business">Business</a></li>
-          <li><a href="/news/category/technology">Technology</a></li>
-		      <li><a href="/news/category/entertainment">Entertainment</a></li>
+          {{#each categories}}
+          <li><a href="/news/category/{{this.dataValues.title}}">{{this.dataValues.title}}</a></li>
+          {{/each}}
         </ul>
       </div>
-		  <div class="topright">
-      {{#if logout}}
-			<a href="/users/login" id="topright">Login</a>
-			<a href="/users/register" id="topright">Register</a>
-      {{else}}
-      <a href="/logout" id="topright">Logout</a>
-      {{/if}}
-		  </div>
+      <div class="topright">
+        {{#if logout}}
+        <a href="/users/login" id="topright">Login</a>
+        <a href="/users/register" id="topright">Register</a>
+        {{else}}
+        <a href="/logout" id="topright">Logout</a>
+        {{/if}}
+      </div>
     </div>
     <div id="site_content">
       <div class="sidebar">
         <!-- sidebar items -->
         <h3>Search</h3>
-        <form method="post" action="#" id="search_form">
+        <form method="post" action="/search" id="search_form">
           <p>
-            <input class="search" type="text" name="search_field" onfocus="this.value=''" value="Enter keywords....." />
-            <input name="search" type="image" style="border: 0; margin: 0 0 -9px 5px;" src="/css/search.png" alt="Search" title="Search" />
+            <input class="search" type="text" name="query" onfocus="this.value=''" value="Enter keywords..." />
+            <input class="search_logo" name="search" type="image" src="/css/search.png" alt="Search" title="Search" />
           </p>
         </form>
         <h3>Top Stories</h3>
         <ul>
           {{#each pinned_articles}}
-            <li style="display: flex; align-items: bottom;">
-              <div style="width: 30px; height: 30px; margin-right: 5px; padding-top: 5px;">
-                <img width="30px" height="auto" src="/article_images/{{this.dataValues.image}}">
-              </div>
-              <div>
-                <p>{{this.dataValues.title}}</p>
-                <a href="/news/single/{{this.dataValues.id}}">Read this story here</a>
-              </div>
-            </li>
+          <li class="pin_display">
+            <div class="pin_style">
+              <img id="pin_image" src="/article_images/{{this.dataValues.image}}">
+            </div>
+            <div>
+              <p>{{this.dataValues.title}}</p>
+              <a href="/news/single/{{this.dataValues.id}}">Read this story here</a>
+            </div>
+          </li>
           {{/each}}
         </ul>
       </div>
       <div id="content">
-	          <!-- page content -->
+        <!-- page content -->
         {{{body}}}
       </div>
     </div>
@@ -75,4 +73,5 @@
     </div>
   </div>
 </body>
+
 </html>

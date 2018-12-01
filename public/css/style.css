@@ -225,6 +225,11 @@ ul#menu li a:hover, ul#menu li.selected a, ul#menu li.selected a:hover
   padding: 4px; 
   font: 100% arial, sans-serif;}
 
+.search_logo
+{ border: 0; 
+  margin: 0 0 -9px 5px;	
+}  
+  
 .form_settings
 { margin: 15px 0 0 0;}
 
@@ -303,4 +308,26 @@ table tr td
 
 .capitalize {
   text-transform: capitalize;
+}
+
+.pin_display {
+	display: flex; 
+	align-items: bottom;
+}
+
+.pin_style {
+	width: 30px;
+	height: 30px; 
+	margin-right: 20px; 
+	padding-top: 5px;
+}
+
+#pin_image {
+	width: 40px; 
+	height: auto;
+}
+
+#article_image {
+	width: 500; 
+	height: 400;
 }
