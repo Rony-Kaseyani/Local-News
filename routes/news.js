@@ -12,9 +12,8 @@ const dateNow = Date.now() + '-'
 const storage = multer.diskStorage({
   destination: './public/article_images/',
   filename: function(req, file, cb) {
-    //req.body is empty...
-    //How could I get the new_file_name property sent from client here?
-    cb(null, dateNow + file.originalname) //+ '-' + Date.now()+".jpg")
+    //Get the new_file_name property sent from client
+    cb(null, dateNow + file.originalname)
   }
 })
 
@@ -26,7 +25,7 @@ router.post('/add-news', isLoggedIn, imageUpload.single('image_file'), async (re
   const isApproved = 0
   const isPinned = 0
   const sessionID = req.user.id
-  console.log('hey bro, are you logged in?' + sessionID)
+  console.log('Checking session ID:' + sessionID)
   models.News.create({
     category: req.body.category,
     title: req.body.title,
