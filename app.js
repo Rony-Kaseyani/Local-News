@@ -25,25 +25,30 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(methodOverride())
 
-app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: false,
-  //cookie: { secure: true }
-}))
+app.use(
+  session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+    //cookie: { secure: true }
+  })
+)
 
 app.use(passport.initialize())
 app.use(passport.session())
 
 // template engine
-app.engine('handlebars', hbs({ defaultLayout: "main" }))
+app.engine('handlebars', hbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
 app.use((req, res, next) => {
-  res.locals.logout = !req.isAuthenticated()
+  app.locals.logout = !req.isAuthenticated()
   models.News.findAll({
-    where: {pinned: true}
-  }).then((news) => {
-    res.locals.pinned_articles = news
+    where: { pinned: true }
+  }).then(news => {
+    app.locals.pinned_articles = news
+  })
+  models.Category.findAll().then(categories => {
+    app.locals.categories = categories
   })
   next()
 })
@@ -61,7 +66,7 @@ app.use((req, res, next) => {
   let err = new Error('The requested page could not be found.')
   err.status = 404
   next(err)
-});
+})
 
 /// error handlers
 
@@ -74,7 +79,7 @@ if (!isProduction) {
     res.status(err.status || 500)
 
     res.render('error', {
-      'errors': {
+      errors: {
         message: err.message,
         error: err
       }
@@ -85,9 +90,9 @@ if (!isProduction) {
 // production error handler
 // no stacktraces leaked to the client
 app.use((err, req, res, next) => {
-  res.status(err.status || 500);
+  res.status(err.status || 500)
   res.render('error', {
-    'errors': {
+    errors: {
       message: err.message,
       error: {}
     }

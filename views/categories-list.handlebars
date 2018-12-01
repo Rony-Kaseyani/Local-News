@@ -1,0 +1,18 @@
+<div id="content">
+    <!-- page content -->
+    <a href="/admin/category">Add new category</a> | <a href="/admin/categories">View Categories</a> | <a href="/news/post">Post news item</a> | <a href="/admin">View Articles</a>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Description</th>
+        </tr>
+        {{#each category}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.title}}</td>
+            <td>{{this.description}}</td>              
+         </tr>
+        {{/each}}         
+    </table>
+</div>
