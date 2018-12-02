@@ -87,6 +87,17 @@ router.post(
 router.get(
   '/article/:id',
   routesErrorHandler(async (req, res, next) => {
+    const newsArticleRatings = await models.Ratings.findAll({
+      where: {
+        NewsId: req.params.id
+      }
+    })
+    let arrOfRatings = []
+    newsArticleRatings.forEach(rating => {
+      arrOfRatings.push(rating.dataValues.rating)
+    })
+    const newsArticleRatingsCount = arrOfRatings.length
+    const newsArticleRatingsAvg = (arrOfRatings.reduce((p, c) => p + c, 0) / arrOfRatings.length).toFixed(1) || 0
     const newsArticle = await models.News.findById(req.params.id)
     const user = await models.user.findById(newsArticle.userId)
     const body = converter.makeHtml(newsArticle.body)
@@ -97,7 +108,14 @@ router.get(
       month: 'long',
       day: 'numeric'
     })
-    return res.render('single-article-view', { newsArticle, body, author, publishedDate })
+    return res.render('single-article-view', {
+      newsArticle,
+      body,
+      author,
+      publishedDate,
+      newsArticleRatingsAvg,
+      newsArticleRatingsCount
+    })
   })
 )
 
@@ -111,7 +129,7 @@ router.post(
       userId: req.user.id,
       NewsId: req.params.id
     })
-    return res.redirect(`/news/${req.params.id}`)
+    res.redirect(`/news/article/${req.params.id}`)
   })
 )
 
