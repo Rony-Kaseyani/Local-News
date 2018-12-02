@@ -1,8 +1,8 @@
 <h2>Add your post</h2>
 <form method="post" enctype="multipart/form-data" action="/news/add-new">
-  <div class="form_settings">
+  <div class="form-settings">
     <p><span>Select News Category:</span>
-      <select id="id" name="category">
+      <select name="category">
         <option value="Category">--Select Category--</option>
         {{#each categories}}
         <option value="{{this.dataValues.title}}">{{this.dataValues.title}}</option>
@@ -15,9 +15,9 @@
     <p><span>Add your news text here:</span><textarea rows="40" cols="60" name="body"></textarea></p>
     <br />
     <br />
-    <p><span>Upload Image:</span><input type="file" name="image_file" id="file-select" /></p>
+    <p><span>Upload Image:</span><input type="file" name="image_file" /></p>
     <br />
-    <p style="padding-top: 15px"><span>&nbsp;</span><input class="submit" type="submit" name="name" value="Post" /></p>
+    <p class="form-button-padding"><span>&nbsp;</span><input class="submit" type="submit" name="name" value="Post" /></p>
     <br />
     <br />
   </div>

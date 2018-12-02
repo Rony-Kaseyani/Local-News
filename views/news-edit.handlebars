@@ -1,8 +1,8 @@
 <h2>Edit your post</h2>
 <form method="post" enctype="multipart/form-data" action="/news/article/{{article.id}}/edit">
-  <div class="form_settings">
+  <div class="form-settings">
     <p><span>Select News Category:</span>
-      <select id="id" name="category">
+      <select name="category">
         <option value="category">{{article.category}}</option>
         <option value="category">--Select Category--</option>
         {{#each categories}}
@@ -27,9 +27,9 @@
     </p>
     <p>
       <span>Upload Image:</span>
-      <input type="file" name="imagefile" id="file-select" /></p>
+      <input type="file" name="imagefile" /></p>
     <br />
-    <p style="padding-top: 15px">
+    <p class="form-button-padding">
       <span>&nbsp;</span>
       <input class="submit" type="submit" name="name" value="Edit" />
     </p>

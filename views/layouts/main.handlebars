@@ -1,26 +1,24 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 
 <head>
-  <title>Local News</title>
-  <meta name="description" content="site description" />
-  <meta name="keywords" content="site keywords, site keywords" />
-  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <meta charset="UTF-8" />
+  <title>LocalNews</title>
+  <meta name="description" content="LocalNews | Straight from the source" />
   <link rel="stylesheet" type="text/css" href="/css/style.css" title="style" />
 </head>
 
 <body>
-  <div id="main">
-    <div id="header">
-      <div id="logo">
-        <div id="logo_text">
-          <!-- change text color -->
-          <h1><a href="/">Local<span class="logo_colour">News</span></a></h1>
+  <div class="main">
+    <div class="header">
+      <div class="logo">
+        <div class="logo-text">
+          <h1><a href="/">Local<span class="logo-colour">News</span></a></h1>
           <h2>Straight from the source.</h2>
         </div>
       </div>
-      <div id="menubar">
-        <ul id="menu">
+      <div class="menubar">
+        <ul class="menu">
           <!-- navigation -->
           <li class="selected"><a href="/">Home</a></li>
           {{#each categories}}
@@ -30,34 +28,34 @@
       </div>
       <div class="topright">
         {{#if logged_out}}
-        <a href="/users/login" id="topright">Login</a>
-        <a href="/users/register" id="topright">Register</a>
+        <a href="/users/login" class="topright-item">Login</a>
+        <a href="/users/register" class="topright-item">Register</a>
         {{else}}
         {{#if admin_user }}
-        <a href="/admin/news" id="topright">Admin Dashboard</a>
+        <a href="/admin/news" class="topright-item">Admin Dashboard</a>
         {{else}}
-        <a href="/users/dashboard" id="topright">Your Dashboard</a>
+        <a href="/users/dashboard" class="topright-item">Your Dashboard</a>
         {{/if}}
-        <a href="/users/logout" id="topright">Logout</a>
+        <a href="/users/logout" class="topright-item">Logout</a>
         {{/if}}
       </div>
     </div>
-    <div id="site_content">
+    <div class="site-content">
       <div class="sidebar">
         <!-- sidebar items -->
         <h3>Search</h3>
-        <form method="post" action="/search" id="search_form">
+        <form method="post" action="/search">
           <p>
-            <input class="search" type="text" name="query" onfocus="this.value=''" value="Enter keywords..." />
-            <input class="search_logo" name="search" type="image" src="/css/search.png" alt="Search" title="Search" />
+            <input class="search" type="text" name="query" placeholder="Search LocalNews" />
+            <input class="search-logo" name="search" type="image" src="/css/search.png" alt="" title="Search" />
           </p>
         </form>
         <h3>Top Stories</h3>
         <ul>
           {{#each pinned_articles}}
-          <li class="pin_display">
-            <div class="pin_style">
-              <img id="pin_image" src="/article_images/{{this.dataValues.image}}">
+          <li class="pin-display">
+            <div class="pin-style">
+              <img class="pin-image" src="/article_images/{{this.dataValues.image}}">
             </div>
             <div>
               <p>{{this.dataValues.title}}</p>
@@ -67,14 +65,13 @@
           {{/each}}
         </ul>
       </div>
-      <div id="content">
+      <div class="content">
         <!-- page content -->
         {{{body}}}
       </div>
     </div>
-    <div id="content_footer"></div>
-    <div id="footer">
-      Copyright &copy; Local News | <a href="contact.html">Contact Us</a>
+    <div class="footer">
+      Copyright &copy; 2018 LocalNews
     </div>
   </div>
 </body>
