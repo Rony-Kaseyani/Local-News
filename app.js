@@ -9,6 +9,7 @@ const hbs = require('express-handlebars')
 const errorhandler = require('errorhandler')
 const models = require('./models')
 const session = require('express-session')
+const validator = require('express-validator')
 
 // init express app
 const app = express()
@@ -23,6 +24,7 @@ app.use(compression())
 app.use(logger('dev'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(validator())
 app.use(methodOverride())
 
 app.use(
@@ -30,7 +32,6 @@ app.use(
     secret: 'keyboard cat',
     resave: false,
     saveUninitialized: false
-    //cookie: { secure: true }
   })
 )
 
@@ -38,18 +39,32 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 // template engine
-app.engine('handlebars', hbs({ defaultLayout: 'main' }))
+app.engine(
+  'handlebars',
+  hbs({
+    extname: 'handlebars',
+    defaultLayout: 'main',
+    layoutsDir: __dirname + '/views/layouts',
+    partialsDir: [
+      //  path to includes
+      __dirname + '/views/includes'
+    ]
+  })
+)
 app.set('view engine', 'handlebars')
-app.use((req, res, next) => {
-  app.locals.logout = !req.isAuthenticated()
-  models.News.findAll({
+app.use(async (req, res, next) => {
+  // checking whether user is admin
+  app.locals.admin_user = req.user && req.user.is_admin
+  // checking whether user is logged out
+  app.locals.logged_out = !req.isAuthenticated()
+  // checking whether user is logged in
+  app.locals.logged_in = req.isAuthenticated()
+  // retrieving all articles pinned by the admin
+  app.locals.pinned_articles = await models.News.findAll({
     where: { pinned: true }
-  }).then(news => {
-    app.locals.pinned_articles = news
   })
-  models.Category.findAll().then(categories => {
-    app.locals.categories = categories
-  })
+  // retrieving all categories to be used in our views to display navigation etc.
+  app.locals.categories = await models.Category.findAll()
   next()
 })
 app.use(require('./routes'))

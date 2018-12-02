@@ -1,108 +1,141 @@
+/// dependencies
 const router = require('express').Router()
 const models = require('../models/')
-const isLoggedIn = require('./util')
+const isAdmin = require('./util').isAdmin
+const routesErrorHandler = require('./util').routesErrorHandler
 
-router.get('/', isLoggedIn, async (req, res) => {
-  if (req.user.is_admin === true) {
-    models.News.findAll({}).then(news => {
-      res.render('admin-articles-view', { articles: news })
-    })
-  } else {
-    res.redirect('/')
-  }
-})
-
-router.get('/users', isLoggedIn, async (req, res) => {
-  models.user.findAll().then(users => {
-    res.render('admin-users-view', { users: users })
+/// admin routes namespaced with /admin
+// admin news dashboard
+router.get(
+  '/news',
+  isAdmin,
+  routesErrorHandler(async (req, res, next) => {
+    const newsArticles = await models.News.findAll({})
+    return res.render('admin-articles-view', { articles: newsArticles })
   })
-})
+)
 
-router.get('/category', async (req, res) => res.render('category-form'))
-
-router.post('/add-category', async (req, res) => {
-  models.Category.create({
-    title: req.body.title,
-    description: req.body.description
-  }).then(() => {
-    res.redirect('/admin')
+// admin news approval/disapproval post requests
+router.post(
+  '/news/approve',
+  isAdmin,
+  routesErrorHandler(async (req, res, next) => {
+    await models.News.update(
+      {
+        approved: true
+      },
+      { where: { id: req.body.article_id } }
+    )
+    return res.redirect('/admin/news')
   })
-})
+)
 
-router.get('/categories', isLoggedIn, async (req, res) => {
-  models.Category.findAll().then(categories => {
-    res.render('categories-list', { category: categories })
+router.post(
+  '/news/disapprove',
+  isAdmin,
+  routesErrorHandler(async (req, res, next) => {
+    await models.News.update(
+      {
+        approved: false
+      },
+      { where: { id: req.body.article_id } }
+    )
+    return res.redirect('/admin/news')
   })
-})
+)
 
-router.post('/approve', async (req, res) => {
-  models.News.update(
-    {
-      approved: true
-    },
-    { where: { id: req.body.article_id } }
-  ).then(() => {
-    res.redirect('/admin')
+// admin news pin/unpin post requests
+router.post(
+  '/news/pin',
+  isAdmin,
+  routesErrorHandler(async (req, res, next) => {
+    await models.News.update(
+      {
+        pinned: true
+      },
+      { where: { id: req.body.article_id } }
+    )
+    return res.redirect('/admin/news')
   })
-})
+)
 
-router.post('/disapprove', async (req, res) => {
-  models.News.update(
-    {
-      approved: false
-    },
-    { where: { id: req.body.article_id } }
-  ).then(() => {
-    res.redirect('/admin')
+router.post(
+  '/news/unpin',
+  isAdmin,
+  routesErrorHandler(async (req, res, next) => {
+    await models.News.update(
+      {
+        pinned: false
+      },
+      { where: { id: req.body.user_id } }
+    )
+    return res.redirect('/admin/news')
   })
-})
+)
 
-router.post('/pin', async (req, res) => {
-  models.News.update(
-    {
-      pinned: true
-    },
-    { where: { id: req.body.article_id } }
-  ).then(() => {
-    res.redirect('/admin')
+// admin user dashboard
+router.get(
+  '/users',
+  isAdmin,
+  routesErrorHandler(async (req, res, next) => {
+    const allUsers = await models.user.findAll({})
+    return res.render('admin-users-view', { users: allUsers })
   })
-})
+)
 
-router.post('/unpin', async (req, res) => {
-  models.News.update(
-    {
-      pinned: false
-    },
-    { where: { id: req.body.user_id } }
-  ).then(() => {
-    res.redirect('/admin')
-  })
-})
-
-router.post('/grant', async (req, res) => {
-  models.user
-    .update(
+// admin user make/revoke admin post requests
+router.post(
+  '/user/make-admin',
+  isAdmin,
+  routesErrorHandler(async (req, res, next) => {
+    await models.user.update(
       {
         is_admin: true
       },
       { where: { id: req.body.user_id } }
     )
-    .then(() => {
-      res.redirect('/admin/users')
-    })
-})
+    return res.redirect('/admin/users')
+  })
+)
 
-router.post('/revoke', async (req, res) => {
-  models.user
-    .update(
+router.post(
+  '/user/revoke-admin',
+  isAdmin,
+  routesErrorHandler(async (req, res, next) => {
+    await models.user.update(
       {
         is_admin: false
       },
       { where: { id: req.body.user_id } }
     )
-    .then(() => {
-      res.redirect('/admin/users')
+    return res.redirect('/admin/users')
+  })
+)
+
+// admin category dashboard
+router.get(
+  '/categories',
+  isAdmin,
+  routesErrorHandler(async (req, res, next) => {
+    const categories = await models.Category.findAll({})
+    return res.render('admin-categories-list', { categories: categories })
+  })
+)
+
+// admin category add form
+router.get('/category/add-new', isAdmin, async (req, res) => res.render('admin-category-form'))
+
+// admin category add post request
+router.post(
+  '/category/add-new',
+  isAdmin,
+  routesErrorHandler(async (req, res, next) => {
+    await models.Category.create({
+      title: req.body.title,
+      description: req.body.description
     })
-})
+    return res.redirect('/admin/categories')
+  })
+)
 
 module.exports = router

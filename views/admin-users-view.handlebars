@@ -1,32 +1,29 @@
-<div id="content">
-    <!-- page content -->
-    <a href="/admin/category">Add new category</a> | <a href="/admin/categories">View Categories</a> | <a href="/news/post">Post news item</a> | <a href="/admin">View Articles</a>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Is Admin?</th>
-            <th>Make Admin</th>
-        </tr>
-        {{#each users}}
-        <tr>
-            <td>{{this.id}}</td>
-            <td>{{this.first_name}}  {{this.last_name}}</td>
-            <td>{{this.is_admin}}</td>
-            <td>
-                {{#if this.is_admin}}
-                <form method="post" action="/admin/revoke">
-                    <input type="hidden" name="user_id" value="{{ this.id }}" />
-                    <input class="submit" type="submit" value="Remove Admin" />  
-                </form>
-                {{else }}
-                <form method="post" action="/admin/grant">
-                    <input type="hidden" name="user_id" value="{{ this.id }}" />
-                    <input class="submit" type="submit" value="Make Admin" />  
-                </form>
-                {{/if}}
-            </td>                   
-         </tr>
-        {{/each}}         
-    </table>
-</div>
+{{> admin/dashboard-navigation }}
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Is Admin?</th>
+    <th>Make Admin</th>
+  </tr>
+  {{#each users}}
+  <tr>
+    <td>{{this.id}}</td>
+    <td>{{this.first_name}} {{this.last_name}}</td>
+    <td>{{this.is_admin}}</td>
+    <td>
+      {{#if this.is_admin}}
+      <form method="post" action="/admin/users/revoke">
+        <input type="hidden" name="user_id" value="{{ this.id }}" />
+        <input class="submit" type="submit" value="Remove Admin" />
+      </form>
+      {{else }}
+      <form method="post" action="/admin/users/grant">
+        <input type="hidden" name="user_id" value="{{ this.id }}" />
+        <input class="submit" type="submit" value="Make Admin" />
+      </form>
+      {{/if}}
+    </td>
+  </tr>
+  {{/each}}
+</table>

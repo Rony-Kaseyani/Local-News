@@ -1,50 +1,47 @@
-<div id="content">
-    <!-- page content -->
-    <a href="/admin/category">Add new category</a> | <a href="/admin/categories">View Categories</a> | <a href="/news/post">Post news item</a> | <a href="/admin">View Articles</a>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Category</th>
-            <th>Title</th>
-            <th>Approved</th>
-            <th>Approve</th>
-            <th>Pinned</th>
-            <th>Pin</th>
-        </tr>
-        {{#each articles}}
-        <tr>
-            <td>{{this.id}}</td>
-            <td>{{this.category}}</td>
-            <td><a href="/news/single/{{this.dataValues.id}}">{{this.title}}</a></td>
-            <td>{{this.approved}}</td>
-            <td>
-                {{#if this.approved}}
-                <form method="post" action="/admin/disapprove">
-                    <input type="hidden" name="article_id" value="{{ this.id }}" />
-                    <input class="submit" type="submit" value="Disapprove" />  
-                </form>
-                {{else }}
-                <form method="post" action="/admin/approve">
-                    <input type="hidden" name="article_id" value="{{ this.id }}" />
-                    <input class="submit" type="submit" value="Approve" />  
-                </form>
-                {{/if}}
-            </td>
-            <td>{{this.pinned}}</td>
-            <td>
-                {{#if this.pinned}}
-                <form method="post" action="/admin/unpin">
-                    <input type="hidden" name="article_id" value="{{ this.id }}" />
-                    <input class="submit" type="submit" value="Unpin" />  
-                </form>
-                {{else }}
-                <form method="post" action="/admin/pin">
-                    <input type="hidden" name="article_id" value="{{ this.id }}" />
-                    <input class="submit" type="submit" value="Pin" />  
-                </form>
-                {{/if}}
-            </td>
-        </tr>
-        {{/each}}
-    </table>
-</div>
+{{> admin/dashboard-navigation }}
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Category</th>
+        <th>Title</th>
+        <th>Approved</th>
+        <th>Approve</th>
+        <th>Pinned</th>
+        <th>Pin</th>
+    </tr>
+    {{#each articles}}
+    <tr>
+        <td>{{this.id}}</td>
+        <td>{{this.category}}</td>
+        <td><a href="/news/article/{{this.dataValues.id}}">{{this.title}}</a></td>
+        <td>{{this.approved}}</td>
+        <td>
+            {{#if this.approved}}
+            <form method="post" action="/admin/news/disapprove">
+                <input type="hidden" name="article_id" value="{{ this.id }}" />
+                <input class="submit" type="submit" value="Disapprove" />
+            </form>
+            {{else }}
+            <form method="post" action="/admin/news/approve">
+                <input type="hidden" name="article_id" value="{{ this.id }}" />
+                <input class="submit" type="submit" value="Approve" />
+            </form>
+            {{/if}}
+        </td>
+        <td>{{this.pinned}}</td>
+        <td>
+            {{#if this.pinned}}
+            <form method="post" action="/admin/news/unpin">
+                <input type="hidden" name="article_id" value="{{ this.id }}" />
+                <input class="submit" type="submit" value="Unpin" />
+            </form>
+            {{else }}
+            <form method="post" action="/admin/news/pin">
+                <input type="hidden" name="article_id" value="{{ this.id }}" />
+                <input class="submit" type="submit" value="Pin" />
+            </form>
+            {{/if}}
+        </td>
+    </tr>
+    {{/each}}
+</table>

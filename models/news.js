@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     //news belongs to a user
     News.belongsTo(models.user)
+    News.hasMany(models.Ratings)
   }
   return News
 }
