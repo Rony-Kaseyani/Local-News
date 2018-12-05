@@ -9,7 +9,7 @@
   "test": {
     "username": "root",
     "password": "dbaccess",
-    "database": "local_news_test",
+    "database": "local_news_development",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

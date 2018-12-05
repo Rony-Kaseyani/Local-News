@@ -24,8 +24,7 @@ router.get(
     const newsResults = await models.News.findAll({
       where: { approved: true }
     })
-    console.log(newsResults)
-    return res.status(200).render('articles-list', { title: 'Latest News', list: newsResults })
+    return res.render('articles-list', { title: 'Latest News', list: newsResults })
   })
 )
 

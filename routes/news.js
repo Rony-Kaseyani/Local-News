@@ -87,35 +87,42 @@ router.post(
 router.get(
   '/article/:id',
   routesErrorHandler(async (req, res, next) => {
-    const newsArticleRatings = await models.Ratings.findAll({
-      where: {
-        NewsId: req.params.id
-      }
-    })
-    let arrOfRatings = []
-    newsArticleRatings.forEach(rating => {
-      arrOfRatings.push(rating.dataValues.rating)
-    })
-    const newsArticleRatingsCount = arrOfRatings.length
-    const newsArticleRatingsAvg = (arrOfRatings.reduce((p, c) => p + c, 0) / arrOfRatings.length).toFixed(1) || 0
-    const newsArticle = await models.News.findById(req.params.id)
-    const user = await models.user.findById(newsArticle.userId)
-    const body = converter.makeHtml(newsArticle.body)
-    const author = `${user.first_name} ${user.last_name}`
-    const publishedDate = newsArticle.createdAt.toLocaleDateString('en-GB', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    })
-    return res.render('single-article-view', {
-      newsArticle,
-      body,
-      author,
-      publishedDate,
-      newsArticleRatingsAvg,
-      newsArticleRatingsCount
-    })
+    const articleId = req.params.id
+    if (Math.round(articleId)) {
+      const newsArticleRatings = await models.Ratings.findAll({
+        where: {
+          NewsId: articleId
+        }
+      })
+      let arrOfRatings = []
+      newsArticleRatings.forEach(rating => {
+        arrOfRatings.push(rating.dataValues.rating)
+      })
+      const newsArticleRatingsCount = arrOfRatings.length
+      const newsArticleRatingsAvg = (arrOfRatings.reduce((p, c) => p + c, 0) / arrOfRatings.length).toFixed(1) || 0
+      const newsArticle = await models.News.findById(articleId)
+      const user = await models.user.findById(newsArticle.userId)
+      const body = converter.makeHtml(newsArticle.body)
+      const author = `${user.first_name} ${user.last_name}`
+      const publishedDate = newsArticle.createdAt.toLocaleDateString('en-GB', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      })
+      return res.render('single-article-view', {
+        newsArticle,
+        body,
+        author,
+        publishedDate,
+        newsArticleRatingsAvg,
+        newsArticleRatingsCount
+      })
+    } else {
+      let err = new Error('The article you were looking for could not be found.')
+      err.status = 404
+      next(err)
+    }
   })
 )
 
@@ -167,14 +174,21 @@ router.post(
 router.get(
   '/:category',
   routesErrorHandler(async (req, res, next) => {
-    const news = await models.News.findAll({
-      where: {
-        category: req.params.category,
-        approved: true
-      }
-    })
-    res.locals.category_nav_title = req.params.category
-    return res.render('articles-list', { title: req.params.category, list: news })
+    const categoryInDb = await models.Category.findAll({ where: { title: req.params.category } })
+    if (categoryInDb) {
+      const news = await models.News.findAll({
+        where: {
+          category: req.params.category,
+          approved: true
+        }
+      })
+      res.locals.category_nav_title = req.params.category
+      return res.render('articles-list', { title: req.params.category, list: news })
+    } else {
+      let err = new Error('The category you requested does not exist.')
+      err.status = 404
+      next(err)
+    }
   })
 )
 

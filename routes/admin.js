@@ -67,7 +67,7 @@ router.post(
       {
         pinned: false
       },
-      { where: { id: req.body.user_id } }
+      { where: { id: req.body.article_id } }
     )
     return res.redirect('/admin/news')
   })
