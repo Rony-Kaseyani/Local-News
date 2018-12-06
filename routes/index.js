@@ -22,9 +22,10 @@ router.get(
   '/',
   routesErrorHandler(async (req, res, next) => {
     const newsResults = await models.News.findAll({
-      where: { approved: true }
+      where: { approved: true },
+      order: [['createdAt', 'DESC']]
     })
-    return res.render('articles-list', { title: 'Latest News', list: newsResults })
+    return res.status(200).render('articles-list', { title: 'Latest News', list: newsResults })
   })
 )
 
@@ -38,14 +39,16 @@ router.get(
         {
           $like: `%${req.query.q}%`
         }
-      )
+      ),
+      order: [['createdAt', 'DESC']],
+      where: { approved: true }
     })
-    return res.render('articles-list', { title: 'Search', list: searchResults })
+    return res.status(200).render('articles-list', { title: 'Search', list: searchResults })
   })
 )
 
 // post request action for form in layout sidebar
-router.post('/search', async (req, res) => res.redirect(`/search?q=${req.body.query}`))
+router.post('/search', async (req, res) => res.status(302).redirect(`/search?q=${req.body.query}`))
 
 /// delegating model specific routes to separate files for better organisation
 // admin routes

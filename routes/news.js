@@ -38,7 +38,7 @@ let imageUpload = multer({ storage: storage })
 
 /// news routes namespaced with /news
 // get form to add new news article
-router.get('/add-new', isLoggedIn, async (req, res) => res.render('post-news'))
+router.get('/add-new', isLoggedIn, async (req, res) => res.status(200).render('post-news'))
 
 // post request for adding new news article
 router.post(
@@ -79,7 +79,7 @@ router.post(
       console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info))
     })
 
-    return res.redirect('/')
+    return res.status(302).redirect('/')
   })
 )
 
@@ -110,7 +110,7 @@ router.get(
         month: 'long',
         day: 'numeric'
       })
-      return res.render('single-article-view', {
+      return res.status(200).render('single-article-view', {
         newsArticle,
         body,
         author,
@@ -136,7 +136,7 @@ router.post(
       userId: req.user.id,
       NewsId: req.params.id
     })
-    res.redirect(`/news/article/${req.params.id}`)
+    res.status(302).redirect(`/news/article/${req.params.id}`)
   })
 )
 
@@ -146,7 +146,7 @@ router.get(
   isLoggedIn,
   routesErrorHandler(async (req, res, next) => {
     const article = await models.News.findById(req.params.id)
-    return res.render('news-edit', { article })
+    return res.status(200).render('news-edit', { article })
   })
 )
 
@@ -166,7 +166,7 @@ router.post(
       },
       { where: { id: req.params.id, userId: req.user.id } }
     )
-    return res.redirect('/users/dashboard')
+    return res.status(302).redirect('/users/dashboard')
   })
 )
 
@@ -175,15 +175,16 @@ router.get(
   '/:category',
   routesErrorHandler(async (req, res, next) => {
     const categoryInDb = await models.Category.findAll({ where: { title: req.params.category } })
-    if (categoryInDb) {
+    if (categoryInDb.length) {
       const news = await models.News.findAll({
         where: {
           category: req.params.category,
           approved: true
-        }
+        },
+        order: [['createdAt', 'DESC']]
       })
       res.locals.category_nav_title = req.params.category
-      return res.render('articles-list', { title: req.params.category, list: news })
+      return res.status(200).render('articles-list', { title: req.params.category, list: news })
     } else {
       let err = new Error('The category you requested does not exist.')
       err.status = 404

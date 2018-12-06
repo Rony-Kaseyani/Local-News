@@ -16,12 +16,12 @@ router.get(
         userId: req.user.id
       }
     })
-    return res.render('user-articles-list', { articles: news })
+    return res.status(200).render('user-articles-list', { articles: news })
   })
 )
 
 // getting login form
-router.get('/login', async (req, res) => res.render('login-form'))
+router.get('/login', async (req, res) => res.status(200).render('login-form'))
 
 // post request for login
 router.post(
@@ -33,15 +33,15 @@ router.post(
     req.checkBody('email', 'Enter a valid email address').isEmail()
 
     if (req.user.is_admin === true) {
-      return res.redirect('/admin/news')
+      return res.status(302).redirect('/admin/news')
     } else {
-      return res.redirect('/users/dashboard')
+      return res.status(302).redirect('/users/dashboard')
     }
   }
 )
 
 // getting form for user registration
-router.get('/register', async (req, res) => res.render('user-registration-form'))
+router.get('/register', async (req, res) => res.status(200).render('user-registration-form'))
 
 // post request for registering user
 router.post(
@@ -51,7 +51,7 @@ router.post(
   }),
   async (req, res) => {
     await req.checkBody('email', 'Enter a valid email address').isEmail()
-    return res.redirect('/users/dashboard')
+    return res.status(302).redirect('/users/dashboard')
   }
 )
 
@@ -59,7 +59,7 @@ router.post(
 router.get('/logout', isLoggedIn, async (req, res) => {
   req.session.destroy()
   req.logout()
-  return res.redirect('/')
+  return res.status(302).redirect('/')
 })
 
 module.exports = router

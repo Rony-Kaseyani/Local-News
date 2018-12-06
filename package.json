@@ -5,7 +5,8 @@
   "main": "server.js",
   "author": "Ronald Buhasio",
   "scripts": {
-    "test": "jest --runInBand --detectOpenHandles --coverage",
+    "test": "jest --runInBand --coverage --detectOpenHandles",
+    "uat-test": "testcafe chrome ./routes/__uat-tests__/login.test.js",
     "start": "node ./server.js",
     "start:dev": "nodemon ./server.js --exec \"npm run lint && node\"",
     "lint": "eslint ./**/*.js"
@@ -41,10 +42,17 @@
     "jest-express": "^1.9.0",
     "nodemon": "^1.18.5",
     "prettier": "^1.15.3",
-    "supertest": "^3.3.0"
+    "sequelize-erd": "^1.2.0",
+    "supertest": "^3.3.0",
+    "testcafe": "^0.23.2"
   },
   "jest": {
+    "roots": [
+      "<rootDir>/routes/__tests__/"
+    ],
     "collectCoverage": true,
+    "bail": true,
+    "verbose": true,
     "coverageReporters": [
       "json",
       "html"

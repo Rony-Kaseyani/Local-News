@@ -1,11 +1,13 @@
 module.exports.isLoggedIn = function(req, res, next) {
   if (req.isAuthenticated()) return next()
-  res.redirect('/users/login')
+  res.status(302).redirect('/users/login')
 }
 
 module.exports.isAdmin = function(req, res, next) {
   if (req.user && (req.isAuthenticated() && req.user.is_admin === true)) return next()
-  res.redirect('/users/login')
+  let err = new Error('Unauthorized access')
+  err.status = 403
+  next(err)
 }
 
 module.exports.routesErrorHandler = function(middleware) {

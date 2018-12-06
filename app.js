@@ -61,7 +61,7 @@ app.use(async (req, res, next) => {
   app.locals.logged_in = req.isAuthenticated()
   // retrieving all articles pinned by the admin
   app.locals.pinned_articles = await models.News.findAll({
-    where: { pinned: true }
+    where: { approved: true, pinned: true }
   })
   // retrieving all categories to be used in our views to display navigation etc.
   app.locals.categories = await models.Category.findAll()

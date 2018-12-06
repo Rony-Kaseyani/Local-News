@@ -10,8 +10,8 @@ router.get(
   '/news',
   isAdmin,
   routesErrorHandler(async (req, res, next) => {
-    const newsArticles = await models.News.findAll({})
-    return res.render('admin-articles-view', { articles: newsArticles })
+    const newsArticles = await models.News.findAll({ order: [['createdAt', 'DESC']] })
+    return res.status(200).render('admin-articles-view', { articles: newsArticles })
   })
 )
 
@@ -26,7 +26,7 @@ router.post(
       },
       { where: { id: req.body.article_id } }
     )
-    return res.redirect('/admin/news')
+    return res.status(302).redirect('/admin/news')
   })
 )
 
@@ -40,7 +40,7 @@ router.post(
       },
       { where: { id: req.body.article_id } }
     )
-    return res.redirect('/admin/news')
+    return res.status(302).redirect('/admin/news')
   })
 )
 
@@ -55,7 +55,7 @@ router.post(
       },
       { where: { id: req.body.article_id } }
     )
-    return res.redirect('/admin/news')
+    return res.status(302).redirect('/admin/news')
   })
 )
 
@@ -69,7 +69,7 @@ router.post(
       },
       { where: { id: req.body.article_id } }
     )
-    return res.redirect('/admin/news')
+    return res.status(302).redirect('/admin/news')
   })
 )
 
@@ -79,7 +79,7 @@ router.get(
   isAdmin,
   routesErrorHandler(async (req, res, next) => {
     const allUsers = await models.user.findAll({})
-    return res.render('admin-users-view', { users: allUsers })
+    return res.status(200).render('admin-users-view', { users: allUsers })
   })
 )
 
@@ -94,7 +94,7 @@ router.post(
       },
       { where: { id: req.body.user_id } }
     )
-    return res.redirect('/admin/users')
+    return res.status(302).redirect('/admin/users')
   })
 )
 
@@ -108,7 +108,7 @@ router.post(
       },
       { where: { id: req.body.user_id } }
     )
-    return res.redirect('/admin/users')
+    return res.status(302).redirect('/admin/users')
   })
 )
 
@@ -118,12 +118,12 @@ router.get(
   isAdmin,
   routesErrorHandler(async (req, res, next) => {
     const categories = await models.Category.findAll({})
-    return res.render('admin-categories-list', { categories: categories })
+    return res.status(200).render('admin-categories-list', { categories: categories })
   })
 )
 
 // admin category add form
-router.get('/category/add-new', isAdmin, async (req, res) => res.render('admin-category-form'))
+router.get('/category/add-new', isAdmin, async (req, res) => res.status(200).render('admin-category-form'))
 
 // admin category add post request
 router.post(
@@ -134,7 +134,7 @@ router.post(
       title: req.body.title,
       description: req.body.description
     })
-    return res.redirect('/admin/categories')
+    return res.status(302).redirect('/admin/categories')
   })
 )
 
