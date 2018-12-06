@@ -42,12 +42,11 @@
     "jest-express": "^1.9.0",
     "nodemon": "^1.18.5",
     "prettier": "^1.15.3",
-    "sequelize-erd": "^1.2.0",
     "supertest": "^3.3.0",
     "testcafe": "^0.23.2"
   },
   "engines": {
-    "node": "10.x"
+    "node": "10.13.0"
   },
   "jest": {
     "roots": [
