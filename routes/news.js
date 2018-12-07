@@ -170,6 +170,15 @@ router.post(
   })
 )
 
+router.post(
+  '/article/:id/delete',
+  isLoggedIn,
+  routesErrorHandler(async (req, res, next) => {
+    await models.News.destroy({ where: { id: req.params.id, userId: req.user.id } })
+    return res.status(302).redirect('/users/dashboard')
+  })
+)
+
 // listing news articles based on category in the url
 router.get(
   '/:category',
