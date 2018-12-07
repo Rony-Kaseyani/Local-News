@@ -5,6 +5,7 @@ const models = require('../models/')
 const multer = require('multer')
 const showdown = require('showdown')
 const nodemailer = require('nodemailer')
+const fs = require('fs')
 const routesErrorHandler = require('./util').routesErrorHandler
 
 // setting up nodemailer
@@ -25,6 +26,7 @@ const converter = new showdown.Converter()
 // current date
 const dateNow = Date.now() + '-'
 
+fs.mkdirSync('./public/article_images/')
 //image upload directory
 const storage = multer.diskStorage({
   destination: './public/article_images/',
