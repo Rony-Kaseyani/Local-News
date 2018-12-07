@@ -73,6 +73,15 @@ router.post(
   })
 )
 
+router.post(
+  '/news/delete',
+  isAdmin,
+  routesErrorHandler(async (req, res, next) => {
+    await models.News.destroy({ where: { id: req.body.article_id } })
+    return res.status(302).redirect('/admin/news')
+  })
+)
+
 // admin user dashboard
 router.get(
   '/users',
