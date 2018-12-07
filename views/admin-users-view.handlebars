@@ -13,12 +13,12 @@
     <td>{{this.is_admin}}</td>
     <td>
       {{#if this.is_admin}}
-      <form method="post" action="/admin/users/revoke">
+      <form method="post" action="/admin/user/revoke-admin">
         <input type="hidden" name="user_id" value="{{ this.id }}" />
         <input class="submit" type="submit" value="Remove Admin" />
       </form>
       {{else }}
-      <form method="post" action="/admin/users/grant">
+      <form method="post" action="/admin/user/make-admin">
         <input type="hidden" name="user_id" value="{{ this.id }}" />
         <input class="submit" type="submit" value="Make Admin" />
       </form>
